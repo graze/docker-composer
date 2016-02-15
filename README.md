@@ -13,6 +13,10 @@ A _small_ Docker image for [composer](https://getcomposer.org), a dependency man
      graze/composer
 ```
 
+## Image Updates
+
+The [Docker Hub image](https://hub.docker.com/r/graze/composer/) is an automated build that's rebuilt daily to pickup any composer updates.
+
 ## To-Do
 
 - [ ] Tag for each actively maintained version of PHP (alpine currently only supports 5.6)
