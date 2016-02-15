@@ -13,7 +13,7 @@ image: ## Build the image 🚀.
 	${DOCKER} build --pull -t ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
 
 clean: ## Delete any images.
-	${DOCKER} images --quiet graze/composer | xargs ${DOCKER} rmi
+	${DOCKER} images --quiet graze/composer | xargs ${DOCKER} rmi -f
 
 help: ## Show this help message.
 	echo "usage: make [target] ..."
