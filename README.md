@@ -1,7 +1,7 @@
 # graze/docker-composer
 
-[![Docker Stars](https://img.shields.io/docker/stars/graze/composer.svg)][hub]
-[![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)][hub]
+[![Docker Stars](https://img.shields.io/docker/stars/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
 [![Image Size](https://img.shields.io/imagelayers/image-size/graze/composer/latest.svg)](https://imagelayers.io/?images=graze/composer:latest)
 [![Image Layers](https://img.shields.io/imagelayers/layers/graze/composer/latest.svg)](https://imagelayers.io/?images=graze/composer:latest)
 
