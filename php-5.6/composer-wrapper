@@ -14,4 +14,4 @@ for argument in "$@"; do
 done
 
 # Call composer with the updated arguments.
-exec /usr/local/bin/composer "$@"
+exec /usr/bin/php /usr/local/bin/composer "$@"

@@ -23,10 +23,10 @@ RUN apk add --no-cache \
     php-phar \
     php-json
 
-RUN php -r "readfile('https://getcomposer.org/installer');" | \
-    php -- --install-dir=/usr/local/bin --filename=composer
+RUN /usr/bin/php -r "readfile('https://getcomposer.org/installer');" | \
+    /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY bin/composer-wrapper /usr/local/bin/composer-wrapper
+COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
 VOLUME ["/usr/src/app"]
 

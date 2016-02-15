@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Loop over each argument.
+for argument in "$@"; do
+    case "$argument" in
+        # Append the argument if the command matches one we need to use `--ignore-platform-reqs` with.
+        # Found using the following search: https://github.com/composer/composer/search?q=ignore-platform-reqs+path%3Asrc%2FComposer%2FCommand%2F
+        # Uses `set` to update the arguments, see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html.
+        create-project|install|remove|require|update) set -- --ignore-platform-reqs "$@";;
+
+        # Otherwise just pass it on.
+        *) ;;
+    esac
+done
+
+# Call composer with the updated arguments.
+exec /usr/bin/php7 /usr/local/bin/composer "$@"
