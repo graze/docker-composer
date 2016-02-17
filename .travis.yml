@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - make images
+  - docker run --rm graze/composer:latest --version
+  - docker run --rm graze/composer:php-7.0 --version
+  - docker run --rm graze/composer:php-5.6 --version
