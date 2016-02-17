@@ -1,9 +1,7 @@
-# graze/docker-composer
+# graze/docker-composer [![Build Status](https://img.shields.io/travis/graze/docker-composer/master.svg)](https://travis-ci.org/graze/docker-composer)
 
-[![Docker Stars](https://img.shields.io/docker/stars/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
 [![Image Size](https://img.shields.io/imagelayers/image-size/graze/composer/latest.svg)](https://imagelayers.io/?images=graze/composer:latest)
-[![Image Layers](https://img.shields.io/imagelayers/layers/graze/composer/latest.svg)](https://imagelayers.io/?images=graze/composer:latest)
+[![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
 
 A _small_ Docker image for [composer](https://getcomposer.org), a dependency management tool for PHP.
 
@@ -25,4 +23,4 @@ A _small_ Docker image for [composer](https://getcomposer.org), a dependency man
 
 ## Image Updates
 
-The [Docker Hub image](https://hub.docker.com/r/graze/composer/) is an automated build that's rebuilt daily to pickup any composer updates.
+The [Docker Hub image](https://hub.docker.com/r/graze/composer/) is an automated build that's also rebuilt daily to pickup any composer updates.
