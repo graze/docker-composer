@@ -32,4 +32,4 @@ VOLUME ["/usr/src/app"]
 
 WORKDIR /usr/src/app
 
-ENTRYPOINT ["/usr/local/bin/composer-wrapper", "--ansi"]
+ENTRYPOINT ["/usr/local/bin/composer-wrapper"]
