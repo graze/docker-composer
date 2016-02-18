@@ -9,7 +9,7 @@
 }
 
 @test "composer version is correct" {
-  run docker run --rm graze/composer:php-7.0 --version
+  run docker run --rm graze/composer:php-7.0 --version --no-ansi
   echo 'status:' $status
   echo 'output:' $output
   version="$(echo $output | awk '{ print $3 }')"
@@ -67,6 +67,13 @@
 
 @test "the image has the php json module installed" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '/usr/bin/php7 -m | grep -i json'
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+}
+
+@test "the image has the php posix module installed" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '/usr/bin/php7 -m | grep -i posix'
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]

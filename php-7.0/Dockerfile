@@ -20,9 +20,10 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
     subversion \
     php7 \
     php7-curl \
+    php7-json \
     php7-openssl \
     php7-phar \
-    php7-json
+    php7-posix
 
 RUN /usr/bin/php7 -r "readfile('https://getcomposer.org/installer');" | \
     /usr/bin/php7 -- --install-dir=/usr/local/bin --filename=composer
