@@ -19,9 +19,10 @@ RUN apk add --no-cache \
     subversion \
     php-cli \
     php-curl \
+    php-json \
     php-openssl \
     php-phar \
-    php-json
+    php-posix
 
 RUN /usr/bin/php -r "readfile('https://getcomposer.org/installer');" | \
     /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
