@@ -8,8 +8,8 @@ A _small_ Docker image for [composer](https://getcomposer.org), a dependency man
 
 ## Dockerfile Links
 
-* `php-7.0`, `latest` ([php-7.0/Dockerfile](./php-7.0/Dockerfile))
-* `php-5.6` ([php-5.6/Dockerfile](./php-5.6/Dockerfile))
+* `php-7.0`, `latest` ([php-7.0/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-7.0/Dockerfile))
+* `php-5.6` ([php-5.6/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-5.6/Dockerfile))
 
 ## Usage
 
