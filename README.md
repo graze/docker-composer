@@ -1,5 +1,6 @@
-# graze/docker-composer [![Build Status](https://img.shields.io/travis/graze/docker-composer/master.svg)](https://travis-ci.org/graze/docker-composer)
+# graze/docker-composer
 
+[![Build Status](https://img.shields.io/travis/graze/docker-composer/master.svg)](https://travis-ci.org/graze/docker-composer)
 [![Image Size](https://img.shields.io/imagelayers/image-size/graze/composer/latest.svg)](https://imagelayers.io/?images=graze/composer:latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
 
@@ -14,13 +15,14 @@ A _small_ Docker image for [composer](https://getcomposer.org), a dependency man
 
 ```bash
 ~$ docker run --rm -it \
-     -v $(pwd):/usr/src/app \
-     -v ~/.composer:/root/.composer \
-     -v ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro \
-     -v ~/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
-     graze/composer
+   -v $(pwd):/usr/src/app \
+   -v ~/.composer:/root/.composer \
+   -v ~/.ssh:/root/.ssh:ro \
+   graze/composer
 ```
 
 ## Image Updates
 
-The [Docker Hub image](https://hub.docker.com/r/graze/composer/) is an automated build that's also rebuilt daily to pickup any composer updates.
+The Docker Hub image ([graze/composer](https://hub.docker.com/r/graze/composer/)) is an automated build that's also rebuilt daily to pickup any composer updates.
+
+The image is _only_ based of the [composer/composer](https://github.com/composer/composer) master branch, until releases (^1.0, etc.) are actively updated with security fixes.

@@ -18,12 +18,31 @@
   [ "$version" = "1.0-dev" ]
 }
 
+@test "the image has a disk size under 100MB" {
+    run docker images graze/composer:php-5.6
+    echo 'status:' $status
+    echo 'output:' $output
+    size="$(echo ${lines[1]} | awk -F '   *' '{ print int($5) }')"
+    echo 'size:' $size
+    [ "$status" -eq 0 ]
+    [ $size -lt 100 ]
+}
+
 @test "the image entrypoint should be the composer wrapper" {
   run bash -c "docker inspect graze/composer:php-5.6 | jq -r '.[]?.Config.Entrypoint[]?'"
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
   [ "$output" = "/usr/local/bin/composer-wrapper" ]
+}
+
+@test "the image volumes are correct" {
+  run bash -c "docker inspect graze/composer:php-5.6 | jq -r '@sh \"\(.[]?.Config.Volumes | to_entries | map(.key))\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"/usr/src/app"* ]]
+  [[ "$output" == *"/root/.composer"* ]]
 }
 
 @test "the image has git installed" {
@@ -44,37 +63,15 @@
   [ "$status" -eq 0 ]
 }
 
-@test "the image has the php openssl module installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php -m | grep -i openssl'
+@test "the image has the correct php modules installed" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php -m'
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
-}
-
-@test "the image has the php curl module installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php -m | grep -i curl'
-  echo 'status:' $status
-  echo 'output:' $output
-  [ "$status" -eq 0 ]
-}
-
-@test "the image has the php phar module installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php -m | grep -i phar'
-  echo 'status:' $status
-  echo 'output:' $output
-  [ "$status" -eq 0 ]
-}
-
-@test "the image has the php json module installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php -m | grep -i json'
-  echo 'status:' $status
-  echo 'output:' $output
-  [ "$status" -eq 0 ]
-}
-
-@test "the image has the php posix module installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php -m | grep -i posix'
-  echo 'status:' $status
-  echo 'output:' $output
-  [ "$status" -eq 0 ]
+  # Lowercase the output before we match
+  [[ "${output,,}" == *"curl"* ]]
+  [[ "${output,,}" == *"json"* ]]
+  [[ "${output,,}" == *"openssl"* ]]
+  [[ "${output,,}" == *"phar"* ]]
+  [[ "${output,,}" == *"posix"* ]]
 }

@@ -2,11 +2,10 @@
 # Run composer in a container.
 #
 # docker run --rm -it \
-#     -v $(pwd):/usr/src/app \
-#     -v ~/.composer:/root/.composer \
-#     -v ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro \
-#     -v ~/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
-#     graze/composer
+#    -v $(pwd):/usr/src/app \
+#    -v ~/.composer:/root/.composer \
+#    -v ~/.ssh:/root/.ssh:ro \
+#    graze/composer:php-5.6
 
 FROM alpine:3.3
 
@@ -29,7 +28,7 @@ RUN /usr/bin/php -r "readfile('https://getcomposer.org/installer');" | \
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
-VOLUME ["/usr/src/app"]
+VOLUME ["/usr/src/app", "/root/.composer"]
 
 WORKDIR /usr/src/app
 
