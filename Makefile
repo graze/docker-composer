@@ -21,9 +21,9 @@ images: ## Build the image 🚀.
 	${DOCKER} build --pull -t ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
 
 test: ## Test the images.
-	${BATS} ./tests/graze_composer_latest.bats
-	${BATS} ./tests/graze_composer_php-7.0.bats
-	${BATS} ./tests/graze_composer_php-5.6.bats
+	${BATS} -t ./tests/graze_composer_latest.bats
+	${BATS} -t ./tests/graze_composer_php-7.0.bats
+	${BATS} -t ./tests/graze_composer_php-5.6.bats
 
 clean: ## Delete any images.
 	${DOCKER} images --quiet graze/composer | xargs ${DOCKER} rmi -f
