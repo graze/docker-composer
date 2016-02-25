@@ -69,6 +69,16 @@
   [ "$status" -eq 0 ]
 }
 
+@test "the image has php 7.0 installed" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:latest -c '/usr/bin/php7 --version'
+  echo 'status:' $status
+  echo 'output:' $output
+  version="$(echo ${lines[0]} | awk '{ print $2 }')"
+  echo 'version:' $version
+  [ "$status" -eq 0 ]
+  [[ "$version" == 7.0.* ]]
+}
+
 @test "the image has the correct php modules installed" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '/usr/bin/php7 -m'
   echo 'status:' $status
