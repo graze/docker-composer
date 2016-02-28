@@ -3,7 +3,7 @@ SHELL = /bin/sh
 DOCKER ?= $(shell which docker)
 DOCKER_REPOSITORY := graze/composer
 
-BATS ?= $(shell which bats)
+BATS := $(shell which bats)
 
 .PHONY: images test clean help
 
@@ -17,6 +17,9 @@ images: ## Build the image 🚀.
 	${DOCKER} build --pull -t ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
 
 test: ## Test the images.
+ifndef BATS
+	$(error "bats not available. Please install it first.")
+endif
 	${BATS} ./tests/graze_composer_latest.bats
 	${BATS} ./tests/graze_composer_php-7.0.bats
 	${BATS} ./tests/graze_composer_php-5.6.bats
