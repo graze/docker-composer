@@ -5,6 +5,10 @@ DOCKER_REPOSITORY := graze/composer
 
 BATS ?= $(shell which bats)
 
+EXECUTABLES = docker bats
+CHECK := $(foreach executable,$(EXECUTABLES),\
+	$(if $(shell which $(executable)),"",$(error "No executable found for $(executable).")))
+
 .PHONY: images test clean help
 
 .SILENT: help
