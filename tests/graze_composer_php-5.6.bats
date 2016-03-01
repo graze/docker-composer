@@ -28,6 +28,12 @@
     [ $size -lt 100 ]
 }
 
+@test "the composer wrapper has been copied" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '[ -x /usr/local/bin/composer-wrapper ]'
+  echo 'status:' $status
+  [ "$status" -eq 0 ]
+}
+
 @test "the image entrypoint should be the composer wrapper" {
   run bash -c "docker inspect graze/composer:php-5.6 | jq -r '.[]?.Config.Entrypoint[]?'"
   echo 'status:' $status
@@ -61,6 +67,16 @@
   run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '[ -x /usr/bin/svn ]'
   echo 'status:' $status
   [ "$status" -eq 0 ]
+}
+
+@test "the image has php 5.6 installed" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:php-5.6 -c '/usr/bin/php --version'
+  echo 'status:' $status
+  echo 'output:' $output
+  version="$(echo ${lines[0]} | awk '{ print $2 }')"
+  echo 'version:' $version
+  [ "$status" -eq 0 ]
+  [[ "$version" == 5.6.* ]]
 }
 
 @test "the image has the correct php modules installed" {
