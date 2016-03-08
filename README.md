@@ -1,7 +1,6 @@
 # graze/docker-composer
 
 [![Build Status](https://img.shields.io/travis/graze/docker-composer/master.svg)](https://travis-ci.org/graze/docker-composer)
-[![Image Size](https://img.shields.io/imagelayers/image-size/graze/composer/latest.svg)](https://imagelayers.io/?images=graze/composer:latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
 
 A _small_ Docker image for [composer](https://getcomposer.org), a dependency management tool for PHP.
