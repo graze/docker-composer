@@ -24,4 +24,4 @@ A _small_ Docker image for [composer](https://getcomposer.org), a dependency man
 
 The Docker Hub image ([graze/composer](https://hub.docker.com/r/graze/composer/)) is an automated build that's also rebuilt daily to pickup any composer updates.
 
-The image is _only_ based of the [composer/composer](https://github.com/composer/composer) master branch, until releases (^1.0, etc.) are actively updated with security fixes.
+The image is _only_ based on the [composer/composer](https://github.com/composer/composer) master branch, until releases (^1.0, etc.) are actively updated with security fixes.
