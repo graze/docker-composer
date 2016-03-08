@@ -11,8 +11,7 @@ FROM alpine:edge
 
 MAINTAINER Samuel Parkinson <sam@graze.com>
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    apk add --no-cache \
+RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/testing" \
     ca-certificates \
     git \
     mercurial \
