@@ -23,7 +23,7 @@ RUN apk add --no-cache \
     php-phar \
     php-posix
 
-RUN /usr/bin/php -r "readfile('https://getcomposer.org/installer');" | \
+RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
     /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
