@@ -16,7 +16,7 @@ script:
 
 deploy:
   - provider: script
-    script: curl --request POST "https://registry.hub.docker.com/u/graze/composer/trigger/${DOCKER_HUB_TRIGGER_TOKEN}/"
+    script: curl --head --request POST "https://registry.hub.docker.com/u/graze/composer/trigger/${DOCKER_HUB_TRIGGER_TOKEN}/"
     on:
       branch: master
       condition: -n "$CI_NIGHTLY_BUILD"
