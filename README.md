@@ -15,8 +15,8 @@ A _small_ Docker image for [composer](https://getcomposer.org), a dependency man
 ```bash
 ~$ docker run --rm -it \
    -v $(pwd):/usr/src/app \
-   -v ~/.composer:/root/.composer \
-   -v ~/.ssh:/root/.ssh:ro \
+   -v ~/.composer:/home/composer/.composer \
+   -v ~/.ssh:/home/composer/.ssh:ro \
    graze/composer
 ```
 

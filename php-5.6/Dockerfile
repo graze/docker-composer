@@ -28,7 +28,11 @@ RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
-VOLUME ["/usr/src/app", "/root/.composer"]
+RUN adduser -D -S -s /bin/false composer
+
+USER composer
+
+VOLUME ["/usr/src/app", "/home/composer/.composer"]
 
 WORKDIR /usr/src/app
 
