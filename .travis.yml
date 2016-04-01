@@ -13,3 +13,15 @@ before_install:
 script:
   - make images
   - make test
+
+deploy:
+  - provider: script
+    script: curl --request POST "https://registry.hub.docker.com/u/graze/composer/trigger/$DOCKER_HUB_TRIGGER_TOKEN/"
+    on:
+      branch: master
+      condition: -n "$CI_NIGHTLY_BUILD"
+
+env:
+  global:
+    # DOCKER_HUB_TRIGGER_TOKEN
+    - secure: "drJad4vRZAYTLbNzhLOaUp0J948PCr4Y6fbjqqhRrZvGCKwFWhXzWvResG7GoLXEaRnhueQUQUpUp04V5O/k+hOxdFv9acJtt+GgLXfzT7BdguOOf/if1nKrsSSb4ylV9o1WY/IphozfBOGozIbza3nim9g6XDxVnI5cm7RUfaMjtXiLPGqX4xJu529CY1WSvrpD870TRhJNScs5uHEIChHFG+/5sHDnNEjp47cjgBLuhGthPTAEkJYciHN1zmt5Rt/mVCm+qNq9695eOTtkkL8uxChe6ceCncAEJDOMZozp+RVjC3hILsUhv2lYdrUKwHG36ydMCGfJ67uRzLOoOYTQc3bEq5igt9z4bCOBs1MTyzRetnlcPebR6C/7tND7v6aJPjTVEXUwuJY8fqYLblmgL7OCMCtbOyMRbxDNysS/TWx5shAqe1hPd4lBi/d1Ou4GpO46DL4L1CwhcXBA9W8/Prt/qUdTvZK+AFtGFl4bTTTQTqNwjHbkiBLwoQoCPMrhd3qSSW29TW4205kWVbBpB0dcid2azaXMhLTkDLa5/E/hxHYpanbjii+vlKfITdNZYxnAxin9494+lhpAGtDetX3Qtvtv6fEn2T7upVO7t33F2gzXsv6oCRzoa2Ht9HKIbAI/5I0eTDqQ0pTU0ZQ3ovGhqPsU/VxiWYZuYpM="
