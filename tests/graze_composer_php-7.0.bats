@@ -1,7 +1,11 @@
 #!/usr/bin/env bats
 
+setup() {
+  tag=$(basename $(echo $BATS_TEST_FILENAME | cut -d _ -f 3) .bats)
+}
+
 @test "alpine version is correct" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c 'cat /etc/os-release'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c 'cat /etc/os-release'
   echo 'status:' $status
   echo 'output:' $output
   [ $status -eq 0 ]
@@ -9,7 +13,7 @@
 }
 
 @test "composer version is correct" {
-  run docker run --rm graze/composer:php-7.0 --version --no-ansi
+  run docker run --rm graze/composer:$tag --version --no-ansi
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
@@ -17,7 +21,7 @@
 }
 
 @test "the image has a disk size under 100MB" {
-    run docker images graze/composer:php-7.0
+    run docker images graze/composer:$tag
     echo 'status:' $status
     echo 'output:' $output
     size="$(echo ${lines[1]} | awk -F '   *' '{ print int($5) }')"
@@ -27,13 +31,13 @@
 }
 
 @test "the composer wrapper has been copied" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '[ -x /usr/local/bin/composer-wrapper ]'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/local/bin/composer-wrapper ]'
   echo 'status:' $status
   [ "$status" -eq 0 ]
 }
 
 @test "the image entrypoint should be the composer wrapper" {
-  run bash -c "docker inspect graze/composer:php-7.0 | jq -r '.[]?.Config.Entrypoint[]?'"
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[]?.Config.Entrypoint[]?'"
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
@@ -41,28 +45,28 @@
 }
 
 @test "the image volumes are correct" {
-  run bash -c "docker inspect graze/composer:php-7.0 | jq -r '@sh \"\(.[]?.Config.Volumes | to_entries | map(.key))\"'"
+  run bash -c "docker inspect graze/composer:$tag | jq -r '@sh \"\(.[]?.Config.Volumes | to_entries | map(.key))\"'"
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
   [[ "$output" == *"/usr/src/app"* ]]
-  [[ "$output" == *"/root/.composer"* ]]
+  [[ "$output" == *"/home/composer/.composer"* ]]
 }
 
 @test "the image has git installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '[ -x /usr/bin/git ]'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/bin/git ]'
   echo 'status:' $status
   [ "$status" -eq 0 ]
 }
 
 @test "the image has mercurial installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '[ -x /usr/bin/hg ]'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/bin/hg ]'
   echo 'status:' $status
   [ "$status" -eq 0 ]
 }
 
 @test "the image has svn installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '[ -x /usr/bin/svn ]'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/bin/svn ]'
   echo 'status:' $status
   [ "$status" -eq 0 ]
 }
@@ -78,7 +82,7 @@
 }
 
 @test "the image has the correct php modules installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:php-7.0 -c '/usr/bin/php7 -m'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/php7 -m'
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
