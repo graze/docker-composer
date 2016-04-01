@@ -12,10 +12,8 @@
   run docker run --rm graze/composer:php-5.6 --version --no-ansi
   echo 'status:' $status
   echo 'output:' $output
-  version="$(echo $output | awk '{ print $3 }')"
-  echo 'version:' $version
   [ "$status" -eq 0 ]
-  [ "$version" = "1.0-dev" ]
+  [[ "$output" == *"1.0-dev"* ]]
 }
 
 @test "the image has a disk size under 100MB" {
@@ -90,4 +88,11 @@
   [[ "${output,,}" == *"openssl"* ]]
   [[ "${output,,}" == *"phar"* ]]
   [[ "${output,,}" == *"posix"* ]]
+}
+
+@test "the root user warning isn't displayed by composer" {
+  run docker run --rm -t graze/composer:latest --version --no-ansi
+  echo 'status:' $status
+  echo 'output:' $output
+  [[ "$output" != *"Running composer as root is highly discouraged"* ]]
 }
