@@ -24,7 +24,7 @@ RUN apk add --no-cache \
     php-posix
 
 RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
-    /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
+    /usr/bin/php -- --install-dir /usr/local/bin --filename composer --snapshot
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
