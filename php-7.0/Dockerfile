@@ -3,7 +3,7 @@
 #
 # docker run --rm -it \
 #    -v $(pwd):/usr/src/app \
-#    -v ~/.composer:/root/.composer \
+#    -v ~/.composer:/home/composer/.composer \
 #    -v ~/.ssh:/root/.ssh:ro \
 #    graze/composer:php-7.0
 
