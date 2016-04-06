@@ -24,7 +24,7 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     php7-posix
 
 RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
-    /usr/bin/php7 -- --install-dir /usr/local/bin --filename composer --snapshot
+    /usr/bin/php7 -- --install-dir /usr/local/bin --filename composer
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
