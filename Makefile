@@ -16,9 +16,9 @@ CHECK := $(foreach executable,$(EXECUTABLES),\
 default: help
 
 images: ## Build the image 🚀.
-	${DOCKER} build --pull --tag ${DOCKER_REPOSITORY}:latest ./php-7.0
-	${DOCKER} build --pull --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
-	${DOCKER} build --pull --tag ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
+	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:latest ./php-7.0
+	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
+	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
 
 test: ## Test the images.
 	${BATS} -t ./tests/graze_composer_latest.bats
