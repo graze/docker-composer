@@ -18,6 +18,7 @@ RUN apk add --no-cache \
     subversion \
     php-cli \
     php-curl \
+    php-iconv \
     php-json \
     php-openssl \
     php-phar \
