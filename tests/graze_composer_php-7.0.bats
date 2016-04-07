@@ -17,7 +17,10 @@ setup() {
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
-  [[ "$output" == *"1.0-dev"* ]]
+  [[ "$output" == "Composer version 1."* ]]
+  [[ "$output" != *"-dev"* ]]
+  [[ "$output" != *"-alpha"* ]]
+  [[ "$output" != *"-beta"* ]]
 }
 
 @test "the image has a disk size under 100MB" {

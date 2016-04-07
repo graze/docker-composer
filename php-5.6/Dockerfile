@@ -18,13 +18,14 @@ RUN apk add --no-cache \
     subversion \
     php-cli \
     php-curl \
+    php-iconv \
     php-json \
     php-openssl \
     php-phar \
     php-posix
 
 RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
-    /usr/bin/php -- --install-dir /usr/local/bin --filename composer --snapshot
+    /usr/bin/php -- --install-dir /usr/local/bin --filename composer
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
