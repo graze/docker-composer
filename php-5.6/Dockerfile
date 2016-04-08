@@ -24,17 +24,16 @@ RUN apk add --no-cache \
     php-phar \
     php-posix
 
-RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
-    /usr/bin/php -- --install-dir /usr/local/bin --filename composer
+RUN php -r "readfile('https://getcomposer.org/installer');" | \
+    php -- --install-dir /usr/local/bin --filename composer && \
+    mkdir -p /home/composer/.composer
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
-RUN adduser -D -S -s /bin/false composer
-
-USER composer
-
-VOLUME ["/usr/src/app", "/home/composer/.composer"]
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /usr/src/app
+
+VOLUME ["/home/composer/.composer"]
 
 ENTRYPOINT ["/usr/local/bin/composer-wrapper"]

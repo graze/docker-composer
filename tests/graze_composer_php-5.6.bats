@@ -4,6 +4,12 @@ setup() {
   tag=$(basename $(echo $BATS_TEST_FILENAME | cut -d _ -f 3) .bats)
 }
 
+teardown() {
+  sudo rm -rf ./tests/.composer || true
+  sudo rm -rf ./tests/composer.lock || true
+  sudo rm -rf ./tests/vendor || true
+}
+
 @test "alpine version is correct" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c 'cat /etc/os-release'
   echo 'status:' $status
@@ -40,20 +46,11 @@ setup() {
 }
 
 @test "the image entrypoint should be the composer wrapper" {
-  run bash -c "docker inspect graze/composer:$tag | jq -r '.[]?.Config.Entrypoint[]?'"
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Entrypoint[]'"
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
   [ "$output" = "/usr/local/bin/composer-wrapper" ]
-}
-
-@test "the image volumes are correct" {
-  run bash -c "docker inspect graze/composer:$tag | jq -r '@sh \"\(.[]?.Config.Volumes | to_entries | map(.key))\"'"
-  echo 'status:' $status
-  echo 'output:' $output
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"/usr/src/app"* ]]
-  [[ "$output" == *"/home/composer/.composer"* ]]
 }
 
 @test "the image has git installed" {
@@ -102,4 +99,30 @@ setup() {
   echo 'status:' $status
   echo 'output:' $output
   [[ "$output" != *"Running composer as root is highly discouraged"* ]]
+}
+
+@test "composer works as expected when installing packages" {
+  run docker run --rm -t -v "$(pwd)":/usr/src/app \
+    graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
+  echo "status: $status"
+  printf 'output: %s\n' "${lines[@]}" | cat -vt
+  [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
+  [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
+  [[ "${lines[2]}" == "  - Installing psr/log (1.0.0)"* ]]
+  [[ "${lines[3]}" == "    Downloading"* ]]
+  [[ "${lines[5]}" == "Writing lock file"* ]]
+  [[ "${lines[6]}" == "Generating autoload files"* ]]
+}
+
+@test "composer works as expected when installing packages with configuration volume mounts" {
+  run docker run --rm -t -v "$(pwd)":/usr/src/app -v "$(pwd)/tests/.composer":/home/composer/.composer \
+    graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
+  echo "status: $status"
+  printf 'output: %s\n' "${lines[@]}" | cat -vt
+  [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
+  [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
+  [[ "${lines[2]}" == "  - Installing psr/log (1.0.0)"* ]]
+  [[ "${lines[3]}" == "    Downloading"* ]]
+  [[ "${lines[5]}" == "Writing lock file"* ]]
+  [[ "${lines[6]}" == "Generating autoload files"* ]]
 }
