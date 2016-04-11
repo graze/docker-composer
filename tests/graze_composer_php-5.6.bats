@@ -5,9 +5,9 @@ setup() {
 }
 
 teardown() {
-  sudo rm -rf ./tests/.composer || true
-  sudo rm -rf ./tests/composer.lock || true
-  sudo rm -rf ./tests/vendor || true
+  rm -rf ./tests/.composer || true
+  rm -rf ./tests/composer.lock || true
+  rm -rf ./tests/vendor || true
 }
 
 @test "alpine version is correct" {
