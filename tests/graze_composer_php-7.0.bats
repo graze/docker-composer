@@ -59,6 +59,12 @@ teardown() {
   [ "$status" -eq 0 ]
 }
 
+@test "the image has openssh installed" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/bin/ssh ]'
+  echo 'status:' $status
+  [ "$status" -eq 0 ]
+}
+
 @test "the image has mercurial installed" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/bin/hg ]'
   echo 'status:' $status
