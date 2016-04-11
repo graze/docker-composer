@@ -12,7 +12,7 @@ before_install:
 
 script:
   - make images
-  - make test
+  - sudo make test
 
 deploy:
   - provider: script

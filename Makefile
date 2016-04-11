@@ -5,7 +5,7 @@ DOCKER_REPOSITORY := graze/composer
 
 BATS ?= $(shell which bats)
 
-EXECUTABLES = docker bats
+EXECUTABLES = docker bats jq
 CHECK := $(foreach executable,$(EXECUTABLES),\
 	$(if $(shell which $(executable)),"",$(error "No executable found for $(executable).")))
 

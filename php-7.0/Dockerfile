@@ -24,17 +24,16 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     php7-phar \
     php7-posix
 
-RUN /usr/bin/wget -qO - https://getcomposer.org/installer | \
-    /usr/bin/php7 -- --install-dir /usr/local/bin --filename composer
+RUN php7 -r "readfile('https://getcomposer.org/installer');" | \
+    php7 -- --install-dir /usr/local/bin --filename composer && \
+    mkdir -p /home/composer/.composer
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
-RUN adduser -D -S -s /bin/false composer
-
-USER composer
-
-VOLUME ["/usr/src/app", "/home/composer/.composer"]
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /usr/src/app
+
+VOLUME ["/home/composer/.composer"]
 
 ENTRYPOINT ["/usr/local/bin/composer-wrapper"]
