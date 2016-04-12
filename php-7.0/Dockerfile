@@ -4,7 +4,7 @@
 # docker run --rm -it \
 #    -v $(pwd):/usr/src/app \
 #    -v ~/.composer:/home/composer/.composer \
-#    -v ~/.ssh:/root/.ssh:ro \
+#    -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro \
 #    graze/composer:php-7.0
 
 FROM alpine:edge
@@ -15,6 +15,7 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     ca-certificates \
     git \
     mercurial \
+    openssh \
     subversion \
     php7 \
     php7-curl \
@@ -26,11 +27,13 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
 
 RUN php7 -r "readfile('https://getcomposer.org/installer');" | \
     php7 -- --install-dir /usr/local/bin --filename composer && \
-    mkdir -p /home/composer/.composer
+    mkdir -p /home/composer/.composer && \
+    ln -s /root/.ssh /home/composer/.ssh
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_HOME=/home/composer/.composer
 
 WORKDIR /usr/src/app
 
