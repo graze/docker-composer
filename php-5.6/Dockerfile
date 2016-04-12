@@ -32,8 +32,8 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | \
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
-ENV COMPOSER_ALLOW_SUPERUSER=1 \
-    COMPOSER_HOME=/home/composer/.composer
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_HOME /home/composer/.composer
 
 WORKDIR /usr/src/app
 

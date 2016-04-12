@@ -100,6 +100,15 @@ teardown() {
   [[ "${output,,}" == *"posix"* ]]
 }
 
+@test "the image has the composer environment variables set" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/env'
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [[ "${output}" == *"COMPOSER_ALLOW_SUPERUSER=1"* ]]
+  [[ "${output}" == *"COMPOSER_HOME=/home/composer/.composer"* ]]
+}
+
 @test "the root user warning isn't displayed by composer" {
   run docker run --rm -t graze/composer:$tag --version --no-ansi
   echo 'status:' $status
