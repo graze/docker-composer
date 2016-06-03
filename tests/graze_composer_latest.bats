@@ -15,7 +15,7 @@ teardown() {
   echo 'status:' $status
   echo 'output:' $output
   [ $status -eq 0 ]
-  [[ "${lines[2]}" == 'VERSION_ID=3.3.0' ]]
+  [[ "${lines[2]}" == "VERSION_ID=3.4."* ]]
 }
 
 @test "composer version is correct" {
