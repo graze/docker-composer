@@ -9,7 +9,7 @@
 
 FROM alpine:3.3
 
-MAINTAINER Samuel Parkinson <sam@graze.com>
+MAINTAINER Samuel Parkinson <samuel.parkinson@ft.com>
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -18,6 +18,7 @@ RUN apk add --no-cache \
     openssh \
     subversion \
     php-cli \
+    php-ctype \
     php-curl \
     php-iconv \
     php-json \
