@@ -9,7 +9,7 @@
 
 FROM alpine:edge
 
-MAINTAINER Samuel Parkinson <sam@graze.com>
+MAINTAINER Samuel Parkinson <samuel.parkinson@ft.com>
 
 RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/testing" \
     ca-certificates \
@@ -18,6 +18,7 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     openssh \
     subversion \
     php7 \
+    php7-ctype \
     php7-curl \
     php7-iconv \
     php7-json \

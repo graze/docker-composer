@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 setup() {
-  tag=$(basename $(echo $BATS_TEST_FILENAME | cut -d _ -f 3) .bats)
+  tag=$(basename "$(echo $BATS_TEST_FILENAME | cut -d _ -f 3)" .bats)
 }
 
 teardown() {
@@ -93,6 +93,7 @@ teardown() {
   echo 'output:' $output
   [ "$status" -eq 0 ]
   # Lowercase the output before we match
+  [[ "${output,,}" == *"ctype"* ]]
   [[ "${output,,}" == *"curl"* ]]
   [[ "${output,,}" == *"json"* ]]
   [[ "${output,,}" == *"openssl"* ]]
