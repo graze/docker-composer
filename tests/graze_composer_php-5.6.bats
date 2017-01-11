@@ -124,10 +124,10 @@ teardown() {
   printf 'output: %s\n' "${lines[@]}" | cat -vt
   [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
   [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
-  [[ "${lines[2]}" == "  - Installing psr/log (1.0.0)"* ]]
-  [[ "${lines[3]}" == "    Downloading"* ]]
-  [[ "${lines[5]}" == "Writing lock file"* ]]
-  [[ "${lines[6]}" == "Generating autoload files"* ]]
+  [[ "${lines[2]}" == "Package operations: 1 install, 0 updates, 0 removals"* ]]
+  [[ "${lines[3]}" == "  - Installing psr/log (1.0.0) Downloading"* ]]
+  [[ "${lines[4]}" == "Writing lock file"* ]]
+  [[ "${lines[5]}" == "Generating autoload files"* ]]
 }
 
 @test "composer works as expected when installing packages with configuration volume mounts" {
@@ -137,8 +137,8 @@ teardown() {
   printf 'output: %s\n' "${lines[@]}" | cat -vt
   [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
   [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
-  [[ "${lines[2]}" == "  - Installing psr/log (1.0.0)"* ]]
-  [[ "${lines[3]}" == "    Downloading"* ]]
-  [[ "${lines[5]}" == "Writing lock file"* ]]
-  [[ "${lines[6]}" == "Generating autoload files"* ]]
+  [[ "${lines[2]}" == "Package operations: 1 install, 0 updates, 0 removals"* ]]
+  [[ "${lines[3]}" == "  - Installing psr/log (1.0.0) Downloading"* ]]
+  [[ "${lines[4]}" == "Writing lock file"* ]]
+  [[ "${lines[5]}" == "Generating autoload files"* ]]
 }
