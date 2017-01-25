@@ -15,9 +15,12 @@ CHECK := $(foreach executable,$(EXECUTABLES),\
 
 default: help
 
+images-quick: ## Build the image 🚀(quicker).
+	${DOCKER} build --tag ${DOCKER_REPOSITORY}:latest --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
+	${DOCKER} build --tag ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
+
 images: ## Build the image 🚀.
-	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:latest ./php-7.0
-	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
+	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:latest --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
 	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:php-5.6 ./php-5.6
 
 test: ## Test the images.
