@@ -5,27 +5,27 @@
 #    -v $(pwd):/usr/src/app \
 #    -v ~/.composer:/home/composer/.composer \
 #    -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro \
-#    graze/composer:php-5.6
+#    graze/composer:php-7.0
 
-FROM alpine:3.3
+FROM alpine:edge
 
 MAINTAINER Samuel Parkinson <samuel.parkinson@ft.com>
 
-RUN apk add --no-cache \
+RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/testing" \
     ca-certificates \
     git \
     mercurial \
     openssh-client \
     subversion \
-    php-cli \
-    php-ctype \
-    php-curl \
-    php-iconv \
-    php-json \
-    php-openssl \
-    php-phar \
-    php-posix \
-    php-zlib
+    php7.1 \
+    php7.1-ctype \
+    php7.1-curl \
+    php7.1-iconv \
+    php7.1-json \
+    php7.1-openssl \
+    php7.1-phar \
+    php7.1-posix \
+    php7.1-zlib
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | \
     php -- --install-dir /usr/local/bin --filename composer && \

@@ -15,7 +15,7 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     ca-certificates \
     git \
     mercurial \
-    openssh \
+    openssh-client \
     subversion \
     php7 \
     php7-ctype \
@@ -24,7 +24,8 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     php7-json \
     php7-openssl \
     php7-phar \
-    php7-posix
+    php7-posix \
+    php7-zlib
 
 RUN php7 -r "readfile('https://getcomposer.org/installer');" | \
     php7 -- --install-dir /usr/local/bin --filename composer && \

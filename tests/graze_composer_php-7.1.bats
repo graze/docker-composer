@@ -15,7 +15,7 @@ teardown() {
   echo 'status:' $status
   echo 'output:' $output
   [ $status -eq 0 ]
-  [[ "${lines[2]}" == "VERSION_ID=3.3."* ]]
+  [[ "${lines[2]}" == "VERSION_ID=3.5."* ]]
 }
 
 @test "composer version is correct" {
@@ -77,14 +77,14 @@ teardown() {
   [ "$status" -eq 0 ]
 }
 
-@test "the image has php 5.6 installed" {
+@test "the image has php 7.1 installed" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/php --version'
   echo 'status:' $status
   echo 'output:' $output
   version="$(echo ${lines[0]} | awk '{ print $2 }')"
   echo 'version:' $version
   [ "$status" -eq 0 ]
-  [[ "$version" == 5.6.* ]]
+  [[ "$version" == 7.1.* ]]
 }
 
 @test "the image has the correct php modules installed" {
