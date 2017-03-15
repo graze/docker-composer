@@ -2,7 +2,6 @@
 
 [![Build Status](https://img.shields.io/travis/graze/docker-composer/master.svg)](https://travis-ci.org/graze/docker-composer)
 [![Docker Pulls](https://img.shields.io/docker/pulls/graze/composer.svg)](https://hub.docker.com/r/graze/composer/)
-[![Image Size](https://images.microbadger.com/badges/image/graze/composer.svg)](https://microbadger.com/images/graze/composer "Get your own image badge on microbadger.com")
 
 A _small_ Docker image for [composer](https://getcomposer.org), a dependency management tool for PHP.
 
