@@ -16,19 +16,15 @@ BATS ?= $(shell which bats)
 default: help
 
 images-quick: ## Build the image 🚀(quicker).
-	${DOCKER} build --tag ${DOCKER_REPOSITORY}:latest \
-		--tag ${DOCKER_REPOSITORY}:php-7 \
-		--tag ${DOCKER_REPOSITORY}:php-7.1 ./php-7.1
-	${DOCKER} build --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
-	${DOCKER} build --tag ${DOCKER_REPOSITORY}:php-5.6 \
-		--tag ${DOCKER_REPOSITORY}:php-5 ./php-5.6
+	make images options=""
 
+images: options ?=--no-cache --pull
 images: ## Build the image 🚀.
-	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:latest \
+	${DOCKER} build ${options} --tag ${DOCKER_REPOSITORY}:latest \
 		--tag ${DOCKER_REPOSITORY}:php-7.1 \
 		--tag ${DOCKER_REPOSITORY}:php-7 ./php-7.1
-	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
-	${DOCKER} build --no-cache --pull --tag ${DOCKER_REPOSITORY}:php-5.6 \
+	${DOCKER} build ${options} --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
+	${DOCKER} build ${options} --tag ${DOCKER_REPOSITORY}:php-5.6 \
 		 --tag ${DOCKER_REPOSITORY}:php-5 ./php-5.6
 
 test: ## Test the images.

@@ -7,9 +7,15 @@
 #    -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro \
 #    graze/composer:php-5.6
 
-FROM alpine:3.3
+FROM alpine:3.5
 
-MAINTAINER Samuel Parkinson <samuel.parkinson@ft.com>
+LABEL maintainer="developers@graze.com" \
+    license="MIT" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.vendor="graze" \
+    org.label-schema.name="composer" \
+    org.label-schema.description="alpine composer image" \
+    org.label-schema.vcs-url="https://github.com/graze/docker-composer"
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -17,15 +23,15 @@ RUN apk add --no-cache \
     mercurial \
     openssh-client \
     subversion \
-    php-cli \
-    php-ctype \
-    php-curl \
-    php-iconv \
-    php-json \
-    php-openssl \
-    php-phar \
-    php-posix \
-    php-zlib
+    php5-cli \
+    php5-ctype \
+    php5-curl \
+    php5-iconv \
+    php5-json \
+    php5-openssl \
+    php5-phar \
+    php5-posix \
+    php5-zlib
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | \
     php -- --install-dir /usr/local/bin --filename composer && \
