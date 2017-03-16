@@ -25,7 +25,7 @@ images: ## Build the image 🚀.
 		--tag ${DOCKER_REPOSITORY}:php-7 ./php-7.1
 	${DOCKER} build ${options} --tag ${DOCKER_REPOSITORY}:php-7.0 ./php-7.0
 	${DOCKER} build ${options} --tag ${DOCKER_REPOSITORY}:php-5.6 \
-		 --tag ${DOCKER_REPOSITORY}:php-5 ./php-5.6
+		--tag ${DOCKER_REPOSITORY}:php-5 ./php-5.6
 
 test: ## Test the images.
 	${BATS} -t ./tests/graze_composer_latest.bats
