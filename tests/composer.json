@@ -1,13 +1,9 @@
 {
     "name": "graze/docker-composer",
-
     "description": "Functional test package for graze/docker-composer.",
-
     "type": "project",
-
     "license": "MIT",
-
     "require": {
-        "psr/log": "1.0.0"
+        "psr/log": "^1.0.0"
     }
 }
