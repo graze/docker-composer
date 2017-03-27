@@ -23,15 +23,16 @@ RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/t
     mercurial \
     openssh-client \
     subversion \
-    php7.1 \
-    php7.1-ctype \
-    php7.1-curl \
-    php7.1-iconv \
-    php7.1-json \
-    php7.1-openssl \
-    php7.1-phar \
-    php7.1-posix \
-    php7.1-zlib
+    php7 \
+    php7-ctype \
+    php7-curl \
+    php7-iconv \
+    php7-json \
+    php7-mbstring \
+    php7-openssl \
+    php7-phar \
+    php7-posix \
+    php7-zlib
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | \
     php -- --install-dir /usr/local/bin --filename composer && \
