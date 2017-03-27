@@ -40,7 +40,7 @@ build-%: ## Build an individual image 🚀
 	${DOCKER} build ${BUILD_ARGS} ${options} --tag ${DOCKER_REPOSITORY}:php-$* ./php-$*
 
 test-%: ## Test the images.
-	${BATS} -t ./tests/graze_composer_php-$*.bats
+	${BATS} ./tests/graze_composer_php-$*.bats
 
 deploy-%: ## Deploy a specific version
 	make tag-$* push-$*

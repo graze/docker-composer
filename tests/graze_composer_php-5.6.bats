@@ -2,9 +2,6 @@
 
 setup() {
   tag=$(basename "$(echo $BATS_TEST_FILENAME | cut -d _ -f 3)" .bats)
-  rm -rf ./tests/.composer || true
-  rm -rf ./tests/composer.lock || true
-  rm -rf ./tests/vendor || true
 }
 
 teardown() {
@@ -17,7 +14,7 @@ teardown() {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c 'cat /etc/os-release'
   echo 'status:' $status
   echo 'output:' $output
-  [ $status -eq 0 ]
+  [ "$status" -eq 0 ]
   [[ "${lines[2]}" == "VERSION_ID=3.5."* ]]
 }
 
@@ -198,7 +195,9 @@ teardown() {
 }
 
 @test "composer works as expected when installing packages with configuration volume mounts" {
-  run docker run --rm -t -v "$(pwd)":/usr/src/app -v "$(pwd)/tests/.composer":/home/composer/.composer \
+  mkdir -p ./tests/.composer
+  run docker run --rm -t -v "$(pwd)":/usr/src/app \
+    -v "$(pwd)/tests/.composer":/home/composer/.composer \
     graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
   echo "status: $status"
   printf 'output: %s\n' "${lines[@]}" | cat -vt

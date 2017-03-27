@@ -198,7 +198,9 @@ teardown() {
 }
 
 @test "composer works as expected when installing packages with configuration volume mounts" {
-  run docker run --rm -t -v "$(pwd)":/usr/src/app -v "$(pwd)/tests/.composer":/home/composer/.composer \
+  mkdir -p ./tests/.composer
+  run docker run --rm -t -v "$(pwd)":/usr/src/app \
+    -v "$(pwd)/tests/.composer":/home/composer/.composer \
     graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
   echo "status: $status"
   printf 'output: %s\n' "${lines[@]}" | cat -vt
