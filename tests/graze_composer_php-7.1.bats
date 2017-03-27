@@ -2,15 +2,12 @@
 
 setup() {
   tag=$(basename "$(echo $BATS_TEST_FILENAME | cut -d _ -f 3)" .bats)
-  rm -rf ./tests/.composer || true
-  rm -rf ./tests/composer.lock || true
-  rm -rf ./tests/vendor || true
 }
 
 teardown() {
-  rm -rf ./tests/.composer || true
-  rm -rf ./tests/composer.lock || true
-  rm -rf ./tests/vendor || true
+  rm -rf ./tests/.composer
+  rm -rf ./tests/composer.lock
+  rm -rf ./tests/vendor
 }
 
 @test "alpine version is correct" {
