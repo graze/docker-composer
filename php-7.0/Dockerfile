@@ -44,6 +44,12 @@ COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /home/composer/.composer
 
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.build-date=$BUILD_DATE
+
 WORKDIR /usr/src/app
 
 VOLUME ["/home/composer/.composer"]
