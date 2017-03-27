@@ -2,6 +2,9 @@
 
 setup() {
   tag=$(basename "$(echo $BATS_TEST_FILENAME | cut -d _ -f 3)" .bats)
+  rm -rf ./tests/.composer || true
+  rm -rf ./tests/composer.lock || true
+  rm -rf ./tests/vendor || true
 }
 
 teardown() {

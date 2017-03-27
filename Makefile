@@ -67,7 +67,7 @@ push-7.1:
 	${DOCKER} push ${DOCKER_REPOSITORY}:latest
 
 clean: ## Delete any images.
-	${DOCKER} rmi -f $(${DOCKER} images -q graze/composer)
+	${DOCKER} images --quiet graze/composer | xargs ${DOCKER} rmi -f
 
 help: ## Show this help message.
 	echo "usage: make [target] ..."
