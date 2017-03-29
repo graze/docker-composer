@@ -5,6 +5,7 @@ setup() {
 }
 
 teardown() {
+  ls -lR ./tests/*
   rm -rf ./tests/.composer
   rm -rf ./tests/composer.lock
   rm -rf ./tests/vendor
