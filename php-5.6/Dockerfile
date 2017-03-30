@@ -23,6 +23,7 @@ RUN apk add --no-cache \
     mercurial \
     openssh-client \
     subversion \
+    php5-bz2 \
     php5-cli \
     php5-ctype \
     php5-curl \
