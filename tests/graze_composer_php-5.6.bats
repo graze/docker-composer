@@ -5,16 +5,17 @@ setup() {
 }
 
 teardown() {
-  rm -rf ./tests/.composer || true
-  rm -rf ./tests/composer.lock || true
-  rm -rf ./tests/vendor || true
+  ls -lR ./tests/*
+  sudo rm -rf ./tests/.composer
+  sudo rm -rf ./tests/composer.lock
+  sudo rm -rf ./tests/vendor
 }
 
 @test "alpine version is correct" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c 'cat /etc/os-release'
   echo 'status:' $status
   echo 'output:' $output
-  [ $status -eq 0 ]
+  [ "$status" -eq 0 ]
   [[ "${lines[2]}" == "VERSION_ID=3.5."* ]]
 }
 
@@ -37,6 +38,70 @@ teardown() {
     echo 'size:' $size
     [ "$status" -eq 0 ]
     [ $size -lt 100 ]
+}
+
+@test "the image has a MIT license" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.license'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "MIT" ]
+}
+
+@test "the image has a maintainer" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.maintainer'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "developers@graze.com" ]
+}
+
+@test "the image uses label-schema.org" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.schema-version\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "1.0" ]
+}
+
+@test "the image has a vcs-url label" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.vcs-url\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "https://github.com/graze/docker-composer" ]
+}
+
+@test "the image has a vcs-ref label set to the current head commit in github" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.vcs-ref\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = `git rev-parse --short HEAD` ]
+}
+
+@test "the image has a build-date label" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.build-date\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" != "null" ]
+}
+
+@test "the image has a vendor label" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.vendor\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "graze" ]
+}
+
+@test "the image has a name label" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.name\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "composer" ]
 }
 
 @test "the composer wrapper has been copied" {
@@ -131,7 +196,9 @@ teardown() {
 }
 
 @test "composer works as expected when installing packages with configuration volume mounts" {
-  run docker run --rm -t -v "$(pwd)":/usr/src/app -v "$(pwd)/tests/.composer":/home/composer/.composer \
+  mkdir -p ./tests/.composer
+  run docker run --rm -t -v "$(pwd)":/usr/src/app \
+    -v "$(pwd)/tests/.composer":/home/composer/.composer \
     graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
   echo "status: $status"
   printf 'output: %s\n' "${lines[@]}" | cat -vt
