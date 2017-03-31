@@ -215,7 +215,7 @@ teardown() {
   [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
   [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
   [[ "${lines[2]}" == "Package operations: 1 install, 0 updates, 0 removals"* ]]
-  [[ "${lines[3]}" == "  - Installing psr/log (1.0.2): Downloading"* ]]
+  [[ "${lines[3]}" == "  - Installing psr/log (1.0.2)"* ]]
   [[ "${lines[4]}" == "Writing lock file"* ]]
   [[ "${lines[5]}" == "Generating autoload files"* ]]
 }
@@ -230,7 +230,7 @@ teardown() {
   [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
   [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
   [[ "${lines[2]}" == "Package operations: 1 install, 0 updates, 0 removals"* ]]
-  [[ "${lines[3]}" == "  - Installing psr/log (1.0.2): Downloading"* ]]
+  [[ "${lines[3]}" == "  - Installing psr/log (1.0.2)"* ]]
   [[ "${lines[4]}" == "Writing lock file"* ]]
   [[ "${lines[5]}" == "Generating autoload files"* ]]
 }
