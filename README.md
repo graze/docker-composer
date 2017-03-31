@@ -6,28 +6,30 @@
 
 A _small_ Docker image for [composer](https://getcomposer.org), a dependency management tool for PHP.
 
-## Dockerfile Links
+## Images
 
-### Different php version with the latest composer:
+This repository generates an image for each composer version, php version and combination there of
 
-* `php-7.1`, `latest` ([php-7.1/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-7.1/Dockerfile))
-* `php-7.0` ([php-7.0/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-7.0/Dockerfile))
-* `php-5.6` ([php-5.6/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-5.6/Dockerfile))
+The available composer versions are:
 
-### Different composer versions with the latest php:
-
-* `1.4.1`
+* `1.4.1`, `latest`
 * `1.4.0`
 * `1.3.3`
 * `1.3.2`
 * `1.3.1`
 * `1.3.0`
 
-### Combination images
+The available php versions are:
 
-You can select a specifc composer and php version using the following:
+* `php-7.1`, `latest` ([php-7.1/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-7.1/Dockerfile))
+* `php-7.0` ([php-7.0/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-7.0/Dockerfile))
+* `php-5.6` ([php-5.6/Dockerfile](https://github.com/graze/docker-composer/blob/master/php-5.6/Dockerfile))
 
-* `{composer_ver}-php{php_ver}`. For example: `1.4.0-php7.0` will use composer `1.4.0` with `php7.0`
+Comination images are in the format: `{composer_ver}-php{php_ver}`
+
+* `1.4.1-php7.1`
+* `1.4.0-php5.6`
+* etc...
 
 ## Usage
 

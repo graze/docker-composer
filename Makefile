@@ -59,7 +59,7 @@ ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
 endif
 endif
 ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
-	${DOCKER} tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ${DOCKER_REPOSITORY}:php${PHP_VER}
+	${DOCKER} tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ${DOCKER_REPOSITORY}:php-${PHP_VER}
 endif
 
 push:
@@ -71,7 +71,7 @@ ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
 endif
 endif
 ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
-	${DOCKER} push ${DOCKER_REPOSITORY}:php${PHP_VER}
+	${DOCKER} push ${DOCKER_REPOSITORY}:php-${PHP_VER}
 endif
 
 clean: ## Delete any images.
