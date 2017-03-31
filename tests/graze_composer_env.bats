@@ -40,7 +40,7 @@ teardown() {
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
-  [[ "$output" == "Composer version ${COMPOSER_VER}" ]]
+  [[ "$output" == "Composer version ${COMPOSER_VER}"* ]]
   [[ "$output" != *"-dev"* ]]
   [[ "$output" != *"-alpha"* ]]
   [[ "$output" != *"-beta"* ]]
