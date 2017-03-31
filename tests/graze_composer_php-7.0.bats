@@ -5,10 +5,17 @@ setup() {
 }
 
 teardown() {
-  ls -lR ./tests/*
-  sudo rm -rf ./tests/.composer
-  sudo rm -rf ./tests/composer.lock
-  sudo rm -rf ./tests/vendor
+  if [ -z ${TRAVIS+x} ]
+  then
+    rm -rf ./tests/.composer
+    rm -rf ./tests/composer.lock
+    rm -rf ./tests/vendor
+  else
+    ls -lR ./tests/*
+    sudo rm -rf ./tests/.composer
+    sudo rm -rf ./tests/composer.lock
+    sudo rm -rf ./tests/vendor
+  fi
 }
 
 @test "alpine version is correct" {
@@ -157,6 +164,7 @@ teardown() {
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
+  [[ "${output}" == *"bz2"* ]]
   [[ "${output}" == *"ctype"* ]]
   [[ "${output}" == *"curl"* ]]
   [[ "${output}" == *"json"* ]]
