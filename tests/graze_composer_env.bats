@@ -1,12 +1,21 @@
 #!/usr/bin/env bats
 
 setup() {
-  tag=$(basename "$(echo $BATS_TEST_FILENAME | cut -d _ -f 3)" .bats)
+  if [ -z ${COMPOSER_VER+x} ]; then
+    echo 'ver environment variable not set'
+    exit 1
+  elif [ -z ${PHP_VER+x} ]; then
+    echo 'phpver environment variable not set'
+    exit 1
+  fi
+  tag="${COMPOSER_VER}-php${PHP_VER}"
+  ls -lR ./tests/*
 }
 
 teardown() {
   if [ -z ${TRAVIS+x} ]
   then
+    ls -lR ./tests/*
     rm -rf ./tests/.composer
     rm -rf ./tests/composer.lock
     rm -rf ./tests/vendor
@@ -22,7 +31,7 @@ teardown() {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c 'cat /etc/os-release'
   echo 'status:' $status
   echo 'output:' $output
-  [ $status -eq 0 ]
+  [ "$status" -eq 0 ]
   [[ "${lines[2]}" == "VERSION_ID=3.5."* ]]
 }
 
@@ -31,7 +40,7 @@ teardown() {
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
-  [[ "$output" == "Composer version 1."* ]]
+  [[ "$output" == "Composer version ${COMPOSER_VER}" ]]
   [[ "$output" != *"-dev"* ]]
   [[ "$output" != *"-alpha"* ]]
   [[ "$output" != *"-beta"* ]]
@@ -111,6 +120,14 @@ teardown() {
   [ "$output" = "composer" ]
 }
 
+@test "the image has a version label" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.version\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "${COMPOSER_VER}-php${PHP_VER}" ]
+}
+
 @test "the composer wrapper has been copied" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/local/bin/composer-wrapper ]'
   echo 'status:' $status
@@ -149,18 +166,18 @@ teardown() {
   [ "$status" -eq 0 ]
 }
 
-@test "the image has php 7.0 installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/php7 --version'
+@test "the image has php ${PHP_VER} installed" {
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/php --version'
   echo 'status:' $status
   echo 'output:' $output
   version="$(echo ${lines[0]} | awk '{ print $2 }')"
   echo 'version:' $version
   [ "$status" -eq 0 ]
-  [[ "$version" == 7.0.* ]]
+  [[ "$version" == "${PHP_VER}"* ]]
 }
 
 @test "the image has the correct php modules installed" {
-  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/php7 -m'
+  run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '/usr/bin/php -m'
   echo 'status:' $status
   echo 'output:' $output
   [ "$status" -eq 0 ]
