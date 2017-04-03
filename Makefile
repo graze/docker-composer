@@ -12,12 +12,13 @@ BATS ?= $(shell which bats)
 BUILD_ARGS := --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
               --build-arg VCS_REF=$(shell git rev-parse --short HEAD)
 
-.PHONY: build build-quick
-.PHONY: test
-.PHONY: tag tag-5.6 tag-7.0 tag-7.1
-.PHONY: push push-5.6 push-7.0 push-7.1
-.PHONY: deploy
-.PHONY: clean help
+PHP_VER?=7.1
+PHP_LATEST=7.1
+COMPOSER_VER?=1.4.1
+COMPOSER_LATEST=1.4.1
+
+.PHONY: build build-quick test tag push deploy clean help
+.PHONY: all-% php-%
 
 .SILENT: help
 
@@ -26,45 +27,52 @@ default: help
 build-quick: ## Build the image 🚀(quicker).
 	make build options=""
 
-build: ## Build all the images 🚀
-build: build-5.6 build-7.0 build-7.1
-tag: ## Tag all the images
-tag: tag-5.6 tag-7.0 tag-7.1
-test: ## Test all the imges
-test: test-5.6 test-7.0 test-7.1
-push: ## Push all the images to docker hub
-push: push-5.6 push-7.0 push-7.1
+all-%: ## Do the % action to all composer/php version combo's (e.g. all-build, all-test)
+	make php-$* COMPOSER_VER=1.4.1
+	make php-$* COMPOSER_VER=1.4.0
+	make php-$* COMPOSER_VER=1.3.3
+	make php-$* COMPOSER_VER=1.3.2
+	make php-$* COMPOSER_VER=1.3.1
+	make php-$* COMPOSER_VER=1.3.0
 
-build-%: options ?=--no-cache --pull
-build-%: ## Build an individual image 🚀
-	${DOCKER} build ${BUILD_ARGS} ${options} --tag ${DOCKER_REPOSITORY}:php-$* ./php-$*
+php-%: ## Do the % action to all php versions (e.g. php-build, php-test)
+	make $* PHP_VER=7.1
+	make $* PHP_VER=7.0
+	make $* PHP_VER=5.6
 
-test-%: ## Test the images.
-	${BATS} ./tests/graze_composer_php-$*.bats
+build: options?=--no-cache --pull
+build: ## Build an individual image 🚀
+	${DOCKER} build ${BUILD_ARGS} --build-arg COMPOSER_VER=${COMPOSER_VER} ${options} \
+		--tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ./php-${PHP_VER}
 
-deploy-%: ## Deploy a specific version
-	make tag-$* push-$*
+test: ## Test the images.
+	 PHP_VER=${PHP_VER} COMPOSER_VER=${COMPOSER_VER} ${BATS} ./tests/graze_composer_env.bats
 
-tag-5.6:
-	${DOCKER} tag ${DOCKER_REPOSITORY}:php-5.6 ${DOCKER_REPOSITORY}:php-5
+deploy: ## Deploy a specific version
+deploy: tag push
 
-push-5.6:
-	${DOCKER} push ${DOCKER_REPOSITORY}:php-5.6
-	${DOCKER} push ${DOCKER_REPOSITORY}:php-5
+tag: ## Tag the image with other variants
+ifeq (${PHP_VER},${PHP_LATEST})
+	${DOCKER} tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ${DOCKER_REPOSITORY}:${COMPOSER_VER}
+ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
+	${DOCKER} tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ${DOCKER_REPOSITORY}:latest
+endif
+endif
+ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
+	${DOCKER} tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ${DOCKER_REPOSITORY}:php-${PHP_VER}
+endif
 
-tag-7.0: ## Nothing to do
-
-push-7.0:
-	${DOCKER} push ${DOCKER_REPOSITORY}:php-7.0
-
-tag-7.1:
-	${DOCKER} tag ${DOCKER_REPOSITORY}:php-7.1 ${DOCKER_REPOSITORY}:php-7
-	${DOCKER} tag ${DOCKER_REPOSITORY}:php-7.1 ${DOCKER_REPOSITORY}:latest
-
-push-7.1:
-	${DOCKER} push ${DOCKER_REPOSITORY}:php-7.1
-	${DOCKER} push ${DOCKER_REPOSITORY}:php-7
+push:
+	${DOCKER} push ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER}
+ifeq (${PHP_VER},${PHP_LATEST})
+	${DOCKER} push ${DOCKER_REPOSITORY}:${COMPOSER_VER}
+ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
 	${DOCKER} push ${DOCKER_REPOSITORY}:latest
+endif
+endif
+ifeq (${COMPOSER_VER},${COMPOSER_LATEST})
+	${DOCKER} push ${DOCKER_REPOSITORY}:php-${PHP_VER}
+endif
 
 clean: ## Delete any images.
 	${DOCKER} images --quiet graze/composer | xargs ${DOCKER} rmi -f

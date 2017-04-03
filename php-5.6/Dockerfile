@@ -34,10 +34,15 @@ RUN apk add --no-cache \
     php5-posix \
     php5-zlib
 
+ARG COMPOSER_VER
+ENV COMPOSER_VER ${COMPOSER_VER:-1.4.1}
+
 RUN php -r "readfile('https://getcomposer.org/installer');" | \
-    php -- --install-dir /usr/local/bin --filename composer && \
+    php -- --install-dir /usr/local/bin --filename composer --version ${COMPOSER_VER} && \
     mkdir -p /home/composer/.composer && \
     ln -s /root/.ssh /home/composer/.ssh
+
+LABEL org.label-schema.version="${COMPOSER_VER}-php5.6"
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
