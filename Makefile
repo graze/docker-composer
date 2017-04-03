@@ -27,7 +27,7 @@ default: help
 build-quick: ## Build the image 🚀(quicker).
 	make build options=""
 
-all-%:
+all-%: ## Do the % action to all composer/php version combo's (e.g. all-build, all-test)
 	make php-$* COMPOSER_VER=1.4.1
 	make php-$* COMPOSER_VER=1.4.0
 	make php-$* COMPOSER_VER=1.3.3
@@ -35,7 +35,7 @@ all-%:
 	make php-$* COMPOSER_VER=1.3.1
 	make php-$* COMPOSER_VER=1.3.0
 
-php-%:
+php-%: ## Do the % action to all php versions (e.g. php-build, php-test)
 	make $* PHP_VER=7.1
 	make $* PHP_VER=7.0
 	make $* PHP_VER=5.6
