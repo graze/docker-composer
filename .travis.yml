@@ -21,7 +21,7 @@ env:
     # DOCKER_PASSWORD
     - secure: U4Q9BYG1Fco0/uPcUxHIRps6gT07sR1t3zt5+wTf4XmROVOaZWHUtTi6WdgiEgXF0n5TuzN/Vs9QYc4jkvU8r5pV7v6rBLKNtH4jUIidR537SzeffoShXnIPX/XHhb09eobk8Sb/fq5GbZidqsHk5IZlJv60qxvqigJ/m1RrgR6ol74v92WsHrOAB9W+d4LzcD58Uj0YCCW0TOyiWph7B+G8M4ecHRWY/sCEAIAMYcpbQ6LbqsLGe36KH2rctbT+D15qjmuDgj9xN3++F+E9seB6UY4rWQBYH64hC5d8WjqHPhksBZORCj3WFtiKwwBodLLsKvbfMIwTfkpWw2GUS7KIU48TWGEh70qs/LQY+CEV1eFiNenUQ4qik3BAI7GYrrIHZSigqxg2NbVaqdm5Dm3gyc32ANffvnDboQqyX8J4R61rC1no5G7+85plV8LKLszx/ykCh4kf0Lqh4LM+O9pYp6V6bE+hnWE53RhMNo88d1ypnG5Ha0mekfM8qkborytKmJijTjjCCsQ28R2jrJcQqJ3Gt7mskrmSw7TZcKIZrgX+nd7qiY7E4RqHp+uSloDg7DohhKj44jzRYcN4blrA0y/jpeWmSinpK0EDYgdURD94uvWsr93kzGFsGrE+i8x2WpzuATsLPn5jiCCUtFqgJdsCNiDTKs80MRZlDsY=
 script:
-  - make composer-build
+  - make composer-build-quick
   - make composer-test
 
 deploy:
