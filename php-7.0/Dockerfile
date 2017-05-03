@@ -35,8 +35,6 @@ RUN apk add --no-cache \
     php7-posix \
     php7-zlib
 
-RUN ln -s /usr/bin/php7 /usr/bin/php
-
 ARG COMPOSER_VER
 ENV COMPOSER_VER ${COMPOSER_VER:-1.4.1}
 
