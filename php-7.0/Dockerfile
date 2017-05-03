@@ -35,6 +35,8 @@ RUN apk add --no-cache \
     php7-posix \
     php7-zlib
 
+RUN ln -s /usr/bin/php7 /usr/bin/php
+
 ARG COMPOSER_VER
 ENV COMPOSER_VER ${COMPOSER_VER:-1.4.1}
 
@@ -46,8 +48,6 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | \
 LABEL org.label-schema.version="${COMPOSER_VER}-php7.0"
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
-
-RUN ln -s /usr/bin/php7 /usr/bin/php
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /home/composer/.composer
