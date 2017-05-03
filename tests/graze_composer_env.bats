@@ -128,6 +128,14 @@ teardown() {
   [ "$output" = "${COMPOSER_VER}-php${PHP_VER}" ]
 }
 
+@test "the image has a docker.cmd label" {
+  run bash -c "docker inspect graze/composer:$tag | jq -r '.[].Config.Labels.\"org.label-schema.docker.cmd\"'"
+  echo 'status:' $status
+  echo 'output:' $output
+  [ "$status" -eq 0 ]
+  [ "$output" = "docker run --rm -it -v \$(pwd):/usr/src/app -v ~/.composer:/home/composer/.composer -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro graze/composer:${COMPOSER_VER}-php${PHP_VER}" ]
+}
+
 @test "the composer wrapper has been copied" {
   run docker run --rm --entrypoint=/bin/sh graze/composer:$tag -c '[ -x /usr/local/bin/composer-wrapper ]'
   echo 'status:' $status

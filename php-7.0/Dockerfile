@@ -15,8 +15,7 @@ LABEL maintainer="developers@graze.com" \
     org.label-schema.vendor="graze" \
     org.label-schema.name="composer" \
     org.label-schema.description="alpine composer image" \
-    org.label-schema.vcs-url="https://github.com/graze/docker-composer" \
-    org.label-schema.docker.cmd="docker run --rm -it -v $(pwd):/usr/src/app -v ~/.composer:/home/composer/.composer -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro graze/composer:php-7.0"
+    org.label-schema.vcs-url="https://github.com/graze/docker-composer"
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -57,7 +56,8 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 LABEL org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.build-date=$BUILD_DATE
+    org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.docker.cmd="docker run --rm -it -v $(pwd):/usr/src/app -v ~/.composer:/home/composer/.composer -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro graze/composer:${COMPOSER_VER}-php7.0"
 
 WORKDIR /usr/src/app
 
