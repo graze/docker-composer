@@ -7,7 +7,7 @@
 #    -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro \
 #    graze/composer:php-7.0
 
-FROM alpine:edge
+FROM alpine:3.5
 
 LABEL maintainer="developers@graze.com" \
     license="MIT" \
