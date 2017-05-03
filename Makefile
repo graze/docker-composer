@@ -25,7 +25,7 @@ COMPOSER_LATEST=1.4.1
 default: help
 
 build-quick: ## Build the image 🚀(quicker).
-	make build options=""
+	make build options=
 
 all-%: ## Do the % action [build, test, ...] to all composer/php version combo's (e.g. all-build, all-test)
 	make composer-php-%
