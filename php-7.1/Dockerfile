@@ -17,7 +17,7 @@ LABEL maintainer="developers@graze.com" \
     org.label-schema.description="alpine composer image" \
     org.label-schema.vcs-url="https://github.com/graze/docker-composer"
 
-RUN apk add --no-cache --repository "http://dl-cdn.alpinelinux.org/alpine/edge/testing" \
+RUN apk add --no-cache \
     ca-certificates \
     git \
     mercurial \
