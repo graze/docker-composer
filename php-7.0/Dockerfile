@@ -47,6 +47,8 @@ LABEL org.label-schema.version="${COMPOSER_VER}-php7.0"
 
 COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
+RUN ln -s /usr/bin/php7 /usr/bin/php
+
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /home/composer/.composer
 
