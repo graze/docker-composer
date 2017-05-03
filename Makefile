@@ -27,18 +27,21 @@ default: help
 build-quick: ## Build the image 🚀(quicker).
 	make build options=""
 
-all-%: ## Do the % action to all composer/php version combo's (e.g. all-build, all-test)
-	make php-$* COMPOSER_VER=1.4.1
-	make php-$* COMPOSER_VER=1.4.0
-	make php-$* COMPOSER_VER=1.3.3
-	make php-$* COMPOSER_VER=1.3.2
-	make php-$* COMPOSER_VER=1.3.1
-	make php-$* COMPOSER_VER=1.3.0
+all-%: ## Do the % action [build, test, ...] to all composer/php version combo's (e.g. all-build, all-test)
+	make composer-php-%
 
-php-%: ## Do the % action to all php versions (e.g. php-build, php-test)
+php-%: ## Do the % action [build, test, ...] to all php versions (e.g. php-build, php-test)
 	make $* PHP_VER=7.1
 	make $* PHP_VER=7.0
 	make $* PHP_VER=5.6
+
+composer-%: ## Do the % action [build, test, ...] to all composer versions (e.g. composer-build, composer-test)
+	make $* COMPOSER_VER=1.4.1
+	make $* COMPOSER_VER=1.4.0
+	make $* COMPOSER_VER=1.3.3
+	make $* COMPOSER_VER=1.3.2
+	make $* COMPOSER_VER=1.3.1
+	make $* COMPOSER_VER=1.3.0
 
 build: options?=--no-cache --pull
 build: ## Build an individual image 🚀
