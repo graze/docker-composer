@@ -54,7 +54,8 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 LABEL org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.build-date=$BUILD_DATE
+    org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.docker.cmd="docker run --rm -it -v $(pwd):/usr/src/app -v ~/.composer:/home/composer/.composer -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro graze/composer:${COMPOSER_VER}-php7.1"
 
 WORKDIR /usr/src/app
 
