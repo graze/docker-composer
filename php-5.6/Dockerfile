@@ -7,7 +7,7 @@
 #    -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro \
 #    graze/composer:php-5.6
 
-FROM alpine:3.5
+FROM alpine:3.6
 
 LABEL maintainer="developers@graze.com" \
     license="MIT" \
@@ -33,6 +33,8 @@ RUN apk add --no-cache \
     php5-phar \
     php5-posix \
     php5-zlib
+
+RUN ln -s /usr/bin/php5 /usr/bin/php
 
 ARG COMPOSER_VER
 ENV COMPOSER_VER ${COMPOSER_VER:-1.4.1}
