@@ -14,8 +14,8 @@ BUILD_ARGS := --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 
 PHP_VER?=7.1
 PHP_LATEST=7.1
-COMPOSER_VER?=1.4.1
-COMPOSER_LATEST=1.4.1
+COMPOSER_VER?=1.4.2
+COMPOSER_LATEST=1.4.2
 
 .PHONY: build build-quick test tag push deploy clean help
 .PHONY: all-% php-%
@@ -28,6 +28,7 @@ build-quick: ## Build the image 🚀(quicker).
 	make build options=""
 
 all-%: ## Do the % action to all composer/php version combo's (e.g. all-build, all-test)
+	make php-$* COMPOSER_VER=1.4.2
 	make php-$* COMPOSER_VER=1.4.1
 	make php-$* COMPOSER_VER=1.4.0
 	make php-$* COMPOSER_VER=1.3.3
