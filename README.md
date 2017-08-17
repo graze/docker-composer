@@ -12,7 +12,10 @@ This repository generates an image for each composer version, php version and co
 
 The available composer versions are:
 
-* `1.4.2`, `latest`
+* `1.5.1`, `latest`
+* `1.5.0`
+* `1.4.3`
+* `1.4.2`
 * `1.4.1`
 * `1.4.0`
 * `1.3.3`

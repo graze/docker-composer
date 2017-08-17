@@ -22,6 +22,9 @@ build-quick: ## Build the image 🚀(quicker).
 	make build options=""
 
 all-%: ## Do the % action to all composer/php version combo's (e.g. all-build, all-test)
+	make php-$* COMPOSER_VER=1.5.1
+	make php-$* COMPOSER_VER=1.5.0
+	make php-$* COMPOSER_VER=1.4.3
 	make php-$* COMPOSER_VER=1.4.2
 	make php-$* COMPOSER_VER=1.4.1
 	make php-$* COMPOSER_VER=1.4.0
