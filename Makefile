@@ -1,13 +1,7 @@
 SHELL = /bin/sh
 
-EXECUTABLES = docker bats jq
-CHECK := $(foreach executable,$(EXECUTABLES),\
-	$(if $(shell which $(executable)),"",$(error "No executable found for $(executable).")))
-
 DOCKER ?= $(shell which docker)
 DOCKER_REPOSITORY := graze/composer
-
-BATS ?= $(shell which bats)
 
 BUILD_ARGS := --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
               --build-arg VCS_REF=$(shell git rev-parse --short HEAD)
@@ -47,7 +41,11 @@ build: ## Build an individual image 🚀
 		--tag ${DOCKER_REPOSITORY}:${COMPOSER_VER}-php${PHP_VER} ./php-${PHP_VER}
 
 test: ## Test the images.
-	 PHP_VER=${PHP_VER} COMPOSER_VER=${COMPOSER_VER} ${BATS} ./tests/graze_composer_env.bats
+	docker run --rm -it \
+		-v $$(pwd):/app \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-e PHP_VER=${PHP_VER} -e COMPOSER_VER=${COMPOSER_VER} -e CWD=$$(pwd) \
+		graze/bats ./tests/graze_composer_env.bats
 
 deploy: ## Deploy a specific version
 deploy: tag push

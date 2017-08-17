@@ -10,6 +10,9 @@ setup() {
   fi
   tag="${COMPOSER_VER}-php${PHP_VER}"
   ls -lR ./tests/*
+  if [ -z ${CWD+x} ]; then
+    CWD=$(pwd)
+  fi
 }
 
 teardown() {
@@ -216,10 +219,10 @@ teardown() {
 }
 
 @test "composer works as expected when installing packages" {
-  run docker run --rm -t -v "$(pwd)":/usr/src/app \
+  run docker run --rm -t -v "${CWD}":/usr/src/app \
     graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
   echo "status: $status"
-  printf 'output: %s\n' "${lines[@]}" | cat -vt
+  printf 'output: %s\n' "${lines[@]}"
   [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
   [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
   [[ "${lines[2]}" == "Package operations: 1 install, 0 updates, 0 removals"* ]]
@@ -230,11 +233,11 @@ teardown() {
 
 @test "composer works as expected when installing packages with configuration volume mounts" {
   mkdir -p ./tests/.composer
-  run docker run --rm -t -v "$(pwd)":/usr/src/app \
+  run docker run --rm -t -v "${CWD}":/usr/src/app \
     -v "$(pwd)/tests/.composer":/home/composer/.composer \
     graze/composer:"$tag" install --no-ansi --working-dir ./tests --no-interaction
   echo "status: $status"
-  printf 'output: %s\n' "${lines[@]}" | cat -vt
+  printf 'output: %s\n' "${lines[@]}"
   [[ "${lines[0]}" == "Loading composer repositories with package information"* ]]
   [[ "${lines[1]}" == "Updating dependencies (including require-dev)"* ]]
   [[ "${lines[2]}" == "Package operations: 1 install, 0 updates, 0 removals"* ]]
