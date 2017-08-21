@@ -38,7 +38,7 @@ RUN apk add --no-cache \
 RUN ln -s /usr/bin/php7 /usr/bin/php
 
 ARG COMPOSER_VER
-ENV COMPOSER_VER ${COMPOSER_VER:-1.4.1}
+ENV COMPOSER_VER ${COMPOSER_VER:-1.5.1}
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | \
     php -- --install-dir /usr/local/bin --filename composer --version ${COMPOSER_VER} && \
@@ -46,8 +46,6 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | \
     ln -s /root/.ssh /home/composer/.ssh
 
 LABEL org.label-schema.version="${COMPOSER_VER}-php7.0"
-
-COPY ./composer-wrapper /usr/local/bin/composer-wrapper
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /home/composer/.composer
@@ -63,4 +61,4 @@ WORKDIR /usr/src/app
 
 VOLUME ["/home/composer/.composer"]
 
-ENTRYPOINT ["/usr/local/bin/composer-wrapper"]
+ENTRYPOINT ["/usr/bin/php", "/usr/local/bin/composer"]

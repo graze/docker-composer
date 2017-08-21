@@ -8,8 +8,8 @@ BUILD_ARGS := --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 
 PHP_VER?=7.1
 PHP_LATEST=7.1
-COMPOSER_VER?=1.4.2
-COMPOSER_LATEST=1.4.2
+COMPOSER_VER?=1.5.1
+COMPOSER_LATEST=1.5.1
 
 .PHONY: build build-quick test tag push deploy clean help
 .PHONY: all-% php-%
