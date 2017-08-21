@@ -144,7 +144,8 @@ teardown() {
   echo 'status:' "$status"
   echo 'output:' "$output"
   [ "$status" -eq 0 ]
-  [ "$output" = "/usr/bin/php/usr/local/bin/composer" ]
+  [ "$output" = "/usr/bin/php
+/usr/local/bin/composer" ]
 }
 
 @test "the image has git installed" {
