@@ -45,6 +45,19 @@ Combination images are in the format: `{composer_ver}-php{php_ver}`
    graze/composer
 ```
 
+### Simulating the platform
+
+To be able to simulate a platform environment to install you can use the composer configuration option [platform](https://getcomposer.org/doc/06-config.md#platform).
+
+```json
+{"config": {"platform": {
+    "php": "5.6",
+    "ext-something": "4.0.0"
+}}}
+```
+
+You can use this, or the `:php-XX` tags to specify that target platform that you want the packages to be installed on.
+
 ## Image Updates
 
 The Docker Hub image ([graze/composer](https://hub.docker.com/r/graze/composer/)) is an automated build that's also rebuilt daily to pickup any composer updates.
@@ -58,6 +71,7 @@ You can build an individual image with:
 ```
 
 or build and test all images with:
+
 ```bash
 ~$ make all-build all-test
 ```
