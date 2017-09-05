@@ -45,7 +45,7 @@ Combination images are in the format: `{composer_ver}-php{php_ver}`
    graze/composer
 ```
 
-### Simulatting the platform
+### Simulating the platform
 
 To be able to simulate a platform environment to install you can use the composer configuration option [platform](https://getcomposer.org/doc/06-config.md#platform).
 
