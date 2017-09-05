@@ -56,7 +56,7 @@ To be able to simulate a platform environment to install you can use the compose
 }}}
 ```
 
-If incompatible packages are attempting to be installed, you can set this to ensure it will always be the same.
+You can use this, or the `:php-XX` tags to specify that target platform that you want the packages to be installed on.
 
 ## Image Updates
 
