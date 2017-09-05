@@ -42,21 +42,21 @@ Combination images are in the format: `{composer_ver}-php{php_ver}`
     -v $(pwd):/usr/src/app \
     -v ~/.composer:/home/composer/.composer \
     -v ~/.ssh/id_rsa:/home/composer/.ssh/id_rsa:ro \
-   graze/composer:php-7.1
+   graze/composer
 ```
 
-### Simulating php and extension versions within composer
+### Simulatting the platform
 
 To be able to simulate a platform environment to install you can use the composer configuration option [platform](https://getcomposer.org/doc/06-config.md#platform).
 
 ```json
-"config": {
-    "platform": {
-        "php": "5.6",
-        "ext-something": "4.0.0"
-    }
-}
+{"config": {"platform": {
+    "php": "5.6",
+    "ext-something": "4.0.0"
+}}}
 ```
+
+If incompatible packages are attempting to be installed, you can set this to ensure it will always be the same.
 
 ## Image Updates
 
@@ -71,6 +71,7 @@ You can build an individual image with:
 ```
 
 or build and test all images with:
+
 ```bash
 ~$ make all-build all-test
 ```
