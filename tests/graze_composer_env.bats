@@ -190,10 +190,14 @@ teardown() {
   [[ "${output}" == *"bz2"* ]]
   [[ "${output}" == *"ctype"* ]]
   [[ "${output}" == *"curl"* ]]
+  [[ "${output}" == *"dom"* ]]
   [[ "${output}" == *"json"* ]]
   [[ "${output}" == *"openssl"* ]]
   [[ "${output}" == *"Phar"* ]]
   [[ "${output}" == *"posix"* ]]
+  [[ "${output}" == *"SimpleXML"* ]]
+  [[ "${output}" == *"tokenizer"* ]]
+  [[ "${output}" == *"xmlwriter"* ]]
   [[ "${output}" == *"zlib"* ]]
 }
 
