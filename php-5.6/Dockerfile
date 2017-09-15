@@ -27,6 +27,7 @@ RUN apk add --no-cache \
     php5-cli \
     php5-ctype \
     php5-curl \
+    php5-dom \
     php5-iconv \
     php5-json \
     php5-openssl \
